@@ -1,4 +1,4 @@
-# Backstage Catalog Generator
+# Backstage Entity Generator
 
 Hello! 👋
 

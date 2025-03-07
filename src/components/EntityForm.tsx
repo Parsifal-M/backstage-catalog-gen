@@ -85,6 +85,7 @@ export const EntityForm = ({ onGenerate }: EntityFormProps) => {
             fullWidth
             id="amount"
             label="Amount"
+            slotProps={{ htmlInput: { min: 1, max: 50 } }}
             type="number"
             variant="outlined"
             value={amount}
@@ -104,8 +105,7 @@ export const EntityForm = ({ onGenerate }: EntityFormProps) => {
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setOwner(e.target.value)
             }
-            error={!!error}
-            helperText={error || "Owner of the entities"}
+            helperText="Owner of the entities"
           />
 
           <Button

@@ -12,16 +12,23 @@ import {
   Paper,
   Stack,
 } from "@mui/material";
+import { parseAnnotations } from "../utils/parseAnnotations";
 
 interface EntityFormProps {
-  onGenerate: (type: EntityType, amount: number, owner?: string) => void;
+  onGenerate: (
+    type: EntityType,
+    amount: number,
+    owner?: string | null,
+    annotations?: Record<string, string>
+  ) => void;
 }
 
 export const EntityForm = ({ onGenerate }: EntityFormProps) => {
   const [entityType, setEntityType] = useState<EntityType>("Component");
   const [amount, setAmount] = useState<number>(1);
-  const [owner, setOwner] = useState<string>("");
+  const [owner, setOwner] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [annotationsText, setAnnotationsText] = useState<string>("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -32,7 +39,8 @@ export const EntityForm = ({ onGenerate }: EntityFormProps) => {
     }
 
     setError(null);
-    onGenerate(entityType, amount, owner);
+    const parsedAnnotations = parseAnnotations(annotationsText);
+    onGenerate(entityType, amount, owner, parsedAnnotations);
   };
 
   return (
@@ -93,7 +101,7 @@ export const EntityForm = ({ onGenerate }: EntityFormProps) => {
               setAmount(parseInt(e.target.value) || 0)
             }
             error={!!error}
-            helperText={error || "Number of entities to generate (1-50)"}
+            helperText={error ?? "Number of entities to generate (1-50)"}
           />
 
           <TextField
@@ -101,11 +109,27 @@ export const EntityForm = ({ onGenerate }: EntityFormProps) => {
             id="owner"
             label="Owner (optional)"
             variant="outlined"
+            placeholder="team-awesome-sauce"
             value={owner}
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               setOwner(e.target.value)
             }
             helperText="Owner of the entities"
+          />
+
+          <TextField
+            fullWidth
+            id="annotations"
+            label="Add Annotations"
+            multiline
+            rows={5}
+            variant="outlined"
+            placeholder="foo/bar: baz"
+            value={annotationsText}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setAnnotationsText(e.target.value)
+            }
+            helperText="You can add annotations in the format 'key: value' separated by new lines"
           />
 
           <Button

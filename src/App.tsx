@@ -41,9 +41,10 @@ function App() {
   const handleGenerate = (
     entityType: EntityType,
     amount: number,
-    owner?: string,
+    owner?: string | null,
+    annotations: Record<string, string> = {}
   ) => {
-    const content = generateEntities(entityType, amount, owner);
+    const content = generateEntities(entityType, amount, owner, annotations);
     setYamlContent(content);
   };
 
@@ -89,6 +90,40 @@ function App() {
               <EntityOutput yamlContent={yamlContent} />
             </Box>
           )}
+          {!yamlContent && (
+            <Box
+              sx={{
+                flexGrow: 1,
+                width: "100%",
+                bgcolor: "background.paper",
+                borderRadius: 2,
+                p: 3,
+              }}
+            >
+              <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
+                Fill out the form to start generating dummy entities for your
+                Backstage catalog.
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                You can copy and dump annotations into the text area below, or
+                enter them manually, line by line in the below format, if you
+                don't add any annotations it will not add any to the generated
+                YAML.
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                <code>some/thing: cool</code>
+                <br />
+                <code>another/cool: idea</code>
+              </Typography>
+              <Typography
+                variant="body2"
+                color="#7df3e1"
+                sx={{ mb: 1, fontWeight: "bold" }}
+              >
+                Nothing will be saved or sent anywhere.
+              </Typography>
+            </Box>
+          )}
         </Box>
 
         <Box
@@ -102,7 +137,12 @@ function App() {
           <Typography variant="body2">
             Silly little tool to generate YAML for Backstage catalog entities.
             Made with ❤️ and ☕️ by{" "}
-            <a href="https://github.com/Parsifal-M">Peter</a>.
+            <a
+              href="https://github.com/Parsifal-M"
+              style={{ color: "#7df3e1", textDecoration: "none" }}
+            >
+              Peter
+            </a>
           </Typography>
         </Box>
       </Container>

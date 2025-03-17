@@ -1,10 +1,15 @@
 import { faker } from "@faker-js/faker";
-import { Entity, ResourceEntitySpec } from "../../types";
-import { EntityGeneratorParams } from "../types";
+import { Entity } from "../../types";
+import { BaseEntitySpec, EntityGeneratorParams } from "../types";
 
-/**
- * Generates a Resource entity
- */
+export interface ResourceEntitySpec extends BaseEntitySpec {
+  type: string;
+  owner: string;
+  system?: string;
+  dependsOn?: string[];
+  dependencyOf?: string[];
+}
+
 export const generateResourceEntity = (params: EntityGeneratorParams<ResourceEntitySpec>): Entity => {
   const { name, annotations, owner } = params;
   return {

@@ -1,10 +1,11 @@
 import { faker } from "@faker-js/faker";
-import { Entity, UserEntitySpec } from "../../types";
-import { EntityGeneratorParams } from "../types";
+import { Entity } from "../../types";
+import { EntityGeneratorParams, EntityProfile } from "../types";
+export interface UserEntitySpec {
+  profile?: EntityProfile;
+  memberOf: string[];
+}
 
-/**
- * Generates a User entity
- */
 export const generateUserEntity = (params: EntityGeneratorParams<UserEntitySpec>): Entity => {
   const { name, annotations } = params;
   return {

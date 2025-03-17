@@ -1,11 +1,13 @@
 import { faker } from "@faker-js/faker";
-import { Entity, BaseEntitySpec } from "../../types";
-import { EntityGeneratorParams } from "../types";
+import { Entity } from "../../types";
+import { BaseEntitySpec, EntityGeneratorParams } from "../types";
+export interface DomainEntitySpec extends BaseEntitySpec {
+  owner: string;
+  subdomainOf?: string;
+  type?: string;
+}
 
-/**
- * Generates a Domain entity
- */
-export const generateDomainEntity = (params: EntityGeneratorParams<BaseEntitySpec>): Entity => {
+export const generateDomainEntity = (params: EntityGeneratorParams<DomainEntitySpec>): Entity => {
   const { name, owner, annotations } = params;
   return {
     apiVersion: "backstage.io/v1alpha1",

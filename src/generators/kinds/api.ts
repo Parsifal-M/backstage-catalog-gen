@@ -1,10 +1,15 @@
 import { faker } from "@faker-js/faker";
-import { Entity, ApiEntitySpec } from "../../types";
-import { EntityGeneratorParams } from "../types";
+import { Entity } from "../../types";
+import { EntityGeneratorParams, BaseEntitySpec } from "../types";
 
-/**
- * Generates an API entity
-*/
+export interface ApiEntitySpec extends BaseEntitySpec {
+  type: string;
+  lifecycle: string;
+  owner: string;
+  system?: string;
+  definition: string;
+}
+
 export const generateApiEntity = (params: EntityGeneratorParams<ApiEntitySpec>): Entity => {
   const { name, annotations, owner } = params;
 

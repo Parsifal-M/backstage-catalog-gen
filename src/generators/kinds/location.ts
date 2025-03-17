@@ -1,9 +1,12 @@
-import { Entity, LocationEntitySpec } from "../../types";
+import { Entity } from "../../types";
 import { EntityGeneratorParams } from "../types";
+export interface LocationEntitySpec {
+  type?: string;
+  target?: string;
+  targets?: string[];
+  presence?: "required" | "optional";
+}
 
-/**
- * Generates a Location entity
- */
 export const generateLocationEntity = (params: EntityGeneratorParams<LocationEntitySpec>): Entity => {
   const { name, annotations } = params;
   const targetSpec: { target?: string; targets?: string[] } = {};

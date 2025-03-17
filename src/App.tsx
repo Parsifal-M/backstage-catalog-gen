@@ -2,7 +2,7 @@ import { useState } from "react";
 import { EntityForm } from "./components/EntityForm";
 import { EntityOutput } from "./components/EntityOutput";
 import { generateEntities } from "./utils/generateEntities";
-import { EntityType } from "./types";
+import { EntityKind } from "./types";
 import {
   ThemeProvider,
   createTheme,
@@ -39,7 +39,7 @@ function App() {
   const [yamlContent, setYamlContent] = useState<string>("");
 
   const handleGenerate = (
-    entityType: EntityType,
+    entityType: EntityKind,
     amount: number,
     owner?: string | null,
     annotations: Record<string, string> = {}

@@ -1,10 +1,13 @@
 import { faker } from "@faker-js/faker";
-import { Entity, SystemEntitySpec } from "../../types";
-import { EntityGeneratorParams } from "../types";
+import { Entity } from "../../types";
+import { BaseEntitySpec, EntityGeneratorParams } from "../types";
 
-/**
- * Generates a System entity
- */
+export interface SystemEntitySpec extends BaseEntitySpec {
+  owner: string;
+  domain?: string;
+  type?: string;
+}
+
 export const generateSystemEntity = (params: EntityGeneratorParams<SystemEntitySpec>): Entity => {
   const { name, annotations, owner } = params;
   return {

@@ -1,11 +1,21 @@
 import { faker } from "@faker-js/faker";
-import { Entity, BaseEntitySpec } from "../../types";
-import { EntityGeneratorParams } from "../types";
+import { Entity } from "../../types";
+import { EntityGeneratorParams, WellKnownLifecycle, BaseEntitySpec } from "../types";
 
-/**
- * Generates a Component entity
- */
-export const generateComponentEntity = (params: EntityGeneratorParams<BaseEntitySpec>): Entity => {
+export type WellKnownComponentType = 'website' | 'service' | 'library';
+export interface ComponentEntitySpec extends BaseEntitySpec {
+  type: WellKnownComponentType;
+  lifecycle: WellKnownLifecycle;
+  owner: string;
+  system?: string;
+  subcomponentOf?: string;
+  providesApis?: string[];
+  consumesApis?: string[];
+  dependsOn?: string[];
+  dependencyOf?: string[];
+}
+
+export const generateComponentEntity = (params: EntityGeneratorParams<ComponentEntitySpec>): Entity => {
   const { name, annotations, owner } = params;
   const componentTypes = ["service", "website", "library"];
   const lifecycleStates = ["experimental", "production", "deprecated"];

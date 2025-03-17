@@ -1,10 +1,14 @@
 import { faker } from "@faker-js/faker";
-import { Entity, GroupEntitySpec } from "../../types";
-import { EntityGeneratorParams } from "../types";
+import { Entity } from "../../types";
+import { BaseEntitySpec, EntityGeneratorParams, EntityProfile } from "../types";
+export interface GroupEntitySpec extends BaseEntitySpec {
+  type: string;
+  profile?: EntityProfile;
+  parent?: string;
+  children: string[];
+  members: string[];
+}
 
-/**
- * Generates a Group entity
- */
 export const generateGroupEntity = (params: EntityGeneratorParams<GroupEntitySpec>): Entity => {
   const { name, annotations, owner } = params;
   return {

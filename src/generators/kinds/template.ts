@@ -1,9 +1,28 @@
-import { Entity, TemplateEntitySpec } from "../../types";
+import { Entity } from "../../types";
 import { EntityGeneratorParams } from "../types";
+export interface TemplateStep {
+  id: string;
+  name: string;
+  action: string;
+  input: Record<string, unknown>;
+}
+export interface TemplateParameter {
+  title: string;
+  required?: string[];
+  properties: Record<string, {
+    title?: string;
+    type?: string;
+    description?: string;
+    [key: string]: unknown;
+  }>;
+}
+export interface TemplateEntitySpec {
+  owner: string;
+  type: string;
+  parameters: TemplateParameter[];
+  steps: TemplateStep[];
+}
 
-/**
- * Generates a Template entity
- */
 export const generateTemplateEntity = (params: EntityGeneratorParams<TemplateEntitySpec>): Entity => {
   const { name, annotations, owner } = params;
 

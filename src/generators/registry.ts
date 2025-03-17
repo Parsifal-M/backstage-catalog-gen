@@ -1,3 +1,4 @@
+import { Entity } from "../types";
 import { generateApiEntity } from "./kinds/api";
 import { generateComponentEntity } from "./kinds/component";
 import { generateDomainEntity } from "./kinds/domain";
@@ -7,8 +8,7 @@ import { generateSystemEntity } from "./kinds/system";
 import { generateTemplateEntity } from "./kinds/template";
 import { generateUserEntity } from "./kinds/user";
 import { generateResourceEntity } from "./kinds/resource";
-import { EntityGeneratorParams, EntityGenerator } from "./types";
-import { EntitySpecMap, Entity } from "../types";
+import { EntityGeneratorParams, EntityGenerator, EntitySpecMap } from "./types";
 
 /**
  * Registry of entity generators

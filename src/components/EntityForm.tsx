@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { EntityType } from "../types";
 import {
   TextField,
   Select,
@@ -13,10 +12,11 @@ import {
   Stack,
 } from "@mui/material";
 import { parseAnnotations } from "../utils/parseAnnotations";
-
+import { EntityKind } from "../types";
+import { generators } from "../generators/registry";
 interface EntityFormProps {
   onGenerate: (
-    type: EntityType,
+    kind: EntityKind,
     amount: number,
     owner?: string | null,
     annotations?: Record<string, string>
@@ -24,7 +24,7 @@ interface EntityFormProps {
 }
 
 export const EntityForm = ({ onGenerate }: EntityFormProps) => {
-  const [entityType, setEntityType] = useState<EntityType>("Component");
+  const [entityKind, setEntityKind] = useState<EntityKind>("Component");
   const [amount, setAmount] = useState<number>(1);
   const [owner, setOwner] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -40,7 +40,7 @@ export const EntityForm = ({ onGenerate }: EntityFormProps) => {
 
     setError(null);
     const parsedAnnotations = parseAnnotations(annotationsText);
-    onGenerate(entityType, amount, owner, parsedAnnotations);
+    onGenerate(entityKind, amount, owner, parsedAnnotations);
   };
 
   return (
@@ -73,19 +73,19 @@ export const EntityForm = ({ onGenerate }: EntityFormProps) => {
       <Box component="form" onSubmit={handleSubmit} noValidate>
         <Stack spacing={3}>
           <FormControl fullWidth variant="outlined">
-            <InputLabel id="entity-type-label">Entity Type</InputLabel>
+            <InputLabel id="entity-kind-label">Entity Kind</InputLabel>
             <Select
-              labelId="entity-type-label"
-              id="entityType"
-              value={entityType}
-              onChange={(e) => setEntityType(e.target.value as EntityType)}
-              label="Entity Type"
+              labelId="entity-kind-label"
+              id="entityKind"
+              value={entityKind}
+              onChange={(e) => setEntityKind(e.target.value as EntityKind)}
+              label="Entity Kind"
             >
-              <MenuItem value="Component">Component</MenuItem>
-              <MenuItem value="API">API</MenuItem>
-              <MenuItem value="System">System</MenuItem>
-              <MenuItem value="Domain">Domain</MenuItem>
-              <MenuItem value="Resource">Resource</MenuItem>
+              {Object.keys(generators).map((kind) => (
+                <MenuItem key={kind} value={kind}>
+                  {kind}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
 

@@ -10,7 +10,7 @@ Sometimes I want to load up the catalog with a bunch of entities and it was a bi
 
 ## What Next?
 
-I don't really know, it serves its current purpose well enough, but I am open to any suggestions or improvements. It would be nice to maybe allow for adding custom annotations and tags? Maybe later!
+I don't really know, it serves its current purpose well enough, but I am open to any suggestions or improvements. It would be nice to maybe allow for adding custom metadata in addition to annotations? Maybe later!
 
 ## Contributing
 

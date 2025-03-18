@@ -28,7 +28,8 @@ export const generateGroupEntity = (params: EntityGeneratorParams<GroupEntitySpe
     params,
     (p: EntityGeneratorParams<GroupEntitySpec>) => ({
       ...defaultSpec,
-      ...p.spec
+      ...p.spec,
+      owner: undefined
     })
   );
 };

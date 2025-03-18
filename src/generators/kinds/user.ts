@@ -23,7 +23,8 @@ export const generateUserEntity = (params: EntityGeneratorParams<UserEntitySpec>
     params,
     (p: EntityGeneratorParams<UserEntitySpec>) => ({
       ...defaultSpec,
-      ...p.spec
+      ...p.spec,
+      owner: undefined
     })
   );
 };

@@ -1,4 +1,3 @@
-import { faker } from "@faker-js/faker";
 import { Entity } from "../../types";
 import { EntityGeneratorParams, WellKnownLifecycle, BaseEntitySpec } from "../types";
 import { createBaseEntity } from "../createBaseEntity";

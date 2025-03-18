@@ -15,7 +15,7 @@ export function createBaseEntity<T>(
     metadata: {
       name,
       description: faker.commerce.productDescription(),
-      annotations
+      ...(annotations && Object.keys(annotations).length > 0 ? { annotations } : null)
     },
     spec: {
       owner: owner ?? getDefaultOwnerForKind(kind),

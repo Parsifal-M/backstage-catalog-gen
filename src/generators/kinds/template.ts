@@ -1,4 +1,5 @@
 import { Entity } from "../../types";
+import { createBaseEntity } from "../createBaseEntity";
 import { EntityGeneratorParams } from "../types";
 export interface TemplateStep {
   id: string;
@@ -24,9 +25,6 @@ export interface TemplateEntitySpec {
 }
 
 export const generateTemplateEntity = (params: EntityGeneratorParams<TemplateEntitySpec>): Entity => {
-  const { name, annotations, owner } = params;
-
-  // Default template parameters
   const defaultParameters = [
     {
       title: "Fill in details",
@@ -76,19 +74,17 @@ export const generateTemplateEntity = (params: EntityGeneratorParams<TemplateEnt
     }
   ];
 
-  return {
-    apiVersion: "backstage.io/v1beta2", // Note: different API version for templates
-    kind: "Template",
-    metadata: {
-      name,
-      description: `Template for creating ${name}`,
-      annotations
-    },
-    spec: {
-      owner: owner ?? "team-platform",
-      type: params.spec?.type || "service",
-      parameters: params.spec?.parameters || defaultParameters,
-      steps: params.spec?.steps || defaultSteps
-    }
+  const defaultSpec = {
+    parameters: defaultParameters,
+    steps: defaultSteps
   };
+
+  return createBaseEntity<TemplateEntitySpec>(
+    "Template",
+    params,
+    (p: EntityGeneratorParams<TemplateEntitySpec>) => ({
+      ...defaultSpec,
+      ...p.spec
+    })
+  );
 };

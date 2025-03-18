@@ -1,6 +1,6 @@
-import { faker } from "@faker-js/faker";
 import { Entity } from "../../types";
 import { EntityGeneratorParams, BaseEntitySpec } from "../types";
+import { createBaseEntity } from "../createBaseEntity";
 
 export interface ApiEntitySpec extends BaseEntitySpec {
   type: string;
@@ -11,26 +11,25 @@ export interface ApiEntitySpec extends BaseEntitySpec {
 }
 
 export const generateApiEntity = (params: EntityGeneratorParams<ApiEntitySpec>): Entity => {
-  const { name, annotations, owner } = params;
-
-  return {
-    apiVersion: "backstage.io/v1alpha1",
-    kind: "API",
-    metadata: {
-      name,
-      description: faker.commerce.productDescription(),
-      annotations
-    },
-    spec: {
-      type: "openapi",
-      lifecycle: "production",
-      owner: owner ?? "team-b",
-      definition: `openapi: "3.0.0"
+  const { name, owner } = params;
+  const defaultSpec = {
+    type: "openapi",
+    lifecycle: "production",
+    owner: owner ?? "team-b",
+    definition: `openapi: "3.0.0"
 info:
   version: 1.0.0
   title: ${name}
   license:
     name: MIT`,
-    }
-  };
+  }
+
+  return createBaseEntity<ApiEntitySpec>(
+    "API",
+    params,
+    (p: EntityGeneratorParams<ApiEntitySpec>) => ({
+      ...defaultSpec,
+      ...p.spec
+    })
+  );
 };

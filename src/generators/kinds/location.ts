@@ -1,4 +1,5 @@
 import { Entity } from "../../types";
+import { createBaseEntity } from "../createBaseEntity";
 import { EntityGeneratorParams } from "../types";
 export interface LocationEntitySpec {
   type?: string;
@@ -8,7 +9,7 @@ export interface LocationEntitySpec {
 }
 
 export const generateLocationEntity = (params: EntityGeneratorParams<LocationEntitySpec>): Entity => {
-  const { name, annotations } = params;
+  const { name } = params;
   const targetSpec: { target?: string; targets?: string[] } = {};
 
   if (params.spec?.target) {
@@ -22,18 +23,11 @@ export const generateLocationEntity = (params: EntityGeneratorParams<LocationEnt
     ];
   }
 
-  return {
-    apiVersion: "backstage.io/v1alpha1",
-    kind: "Location",
-    metadata: {
-      name,
-      description: `Location for ${name} resources`,
-      annotations
-    },
-    spec: {
-      type: params.spec?.type || "url",
-      presence: params.spec?.presence || "required",
-      ...targetSpec
-    }
-  };
+  return createBaseEntity<LocationEntitySpec>(
+    "Location",
+    params,
+    (p: EntityGeneratorParams<LocationEntitySpec>) => ({
+      ...p.spec
+    })
+  );
 };

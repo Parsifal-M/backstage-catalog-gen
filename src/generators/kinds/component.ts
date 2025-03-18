@@ -1,6 +1,7 @@
 import { faker } from "@faker-js/faker";
 import { Entity } from "../../types";
 import { EntityGeneratorParams, WellKnownLifecycle, BaseEntitySpec } from "../types";
+import { createBaseEntity } from "../createBaseEntity";
 
 export type WellKnownComponentType = 'website' | 'service' | 'library';
 export interface ComponentEntitySpec extends BaseEntitySpec {
@@ -16,22 +17,20 @@ export interface ComponentEntitySpec extends BaseEntitySpec {
 }
 
 export const generateComponentEntity = (params: EntityGeneratorParams<ComponentEntitySpec>): Entity => {
-  const { name, annotations, owner } = params;
   const componentTypes = ["service", "website", "library"];
   const lifecycleStates = ["experimental", "production", "deprecated"];
 
-  return {
-    apiVersion: "backstage.io/v1alpha1",
-    kind: "Component",
-    metadata: {
-      name,
-      description: faker.commerce.productDescription(),
-      annotations
-    },
-    spec: {
-      type: params.spec?.type || componentTypes[Math.floor(Math.random() * componentTypes.length)],
-      lifecycle: params.spec?.lifecycle || lifecycleStates[0],
-      owner: owner ?? "team-a",
-    }
+  const defaultSpec = {
+    type: componentTypes[Math.floor(Math.random() * componentTypes.length)],
+    lifecycle: lifecycleStates[0]
   };
+
+  return createBaseEntity<ComponentEntitySpec>(
+    "Component",
+    params,
+    (p: EntityGeneratorParams<ComponentEntitySpec>) => ({
+      ...defaultSpec,
+      ...p.spec
+    })
+  );
 };

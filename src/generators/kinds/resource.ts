@@ -1,6 +1,6 @@
-import { faker } from "@faker-js/faker";
 import { Entity } from "../../types";
 import { BaseEntitySpec, EntityGeneratorParams } from "../types";
+import { createBaseEntity } from "../createBaseEntity";
 
 export interface ResourceEntitySpec extends BaseEntitySpec {
   type: string;
@@ -11,21 +11,18 @@ export interface ResourceEntitySpec extends BaseEntitySpec {
 }
 
 export const generateResourceEntity = (params: EntityGeneratorParams<ResourceEntitySpec>): Entity => {
-  const { name, annotations, owner } = params;
-  return {
-    apiVersion: "backstage.io/v1alpha1",
-    kind: "Resource",
-    metadata: {
-      name,
-      description: faker.commerce.productDescription(),
-      annotations
-    },
-    spec: {
-      type: params.spec?.type || faker.database.engine().toLowerCase(),
-      owner: owner ?? "team-a",
-      system: params.spec?.system,
-      dependsOn: params.spec?.dependsOn,
-      dependencyOf: params.spec?.dependencyOf
-    }
+  const defaultSpec = {
+    system: params.spec?.system,
+    dependsOn: params.spec?.dependsOn,
+    dependencyOf: params.spec?.dependencyOf
   };
+
+  return createBaseEntity<ResourceEntitySpec>(
+    "Resource",
+    params,
+    (p: EntityGeneratorParams<ResourceEntitySpec>) => ({
+      ...defaultSpec,
+      ...p.spec
+    })
+  );
 };

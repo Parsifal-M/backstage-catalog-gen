@@ -13,7 +13,7 @@ export const generateUserEntity = (params: EntityGeneratorParams<UserEntitySpec>
     profile: {
       displayName: params.spec?.profile?.displayName || faker.person.fullName(),
       email: params.spec?.profile?.email || `${name}@example.com`,
-      picture: params.spec?.profile?.picture || faker.image.avatar()
+      picture: params.spec?.profile?.picture || 'https://avatars.githubusercontent.com/u/55416270'
     },
     memberOf: params.spec?.memberOf || []
   };

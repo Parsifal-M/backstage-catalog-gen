@@ -10,7 +10,7 @@ export interface GroupEntitySpec extends BaseEntitySpec {
 }
 
 export const generateGroupEntity = (params: EntityGeneratorParams<GroupEntitySpec>): Entity => {
-  const { name, owner } = params;
+  const { name } = params;
   const defaultSpec = {
     type: "team",
     profile: {
@@ -18,7 +18,7 @@ export const generateGroupEntity = (params: EntityGeneratorParams<GroupEntitySpe
       email: `${name}@example.com`,
       picture: `https://example.com/avatar/${name}.png`
     },
-    parent: owner ?? 'team-a',
+    parent: 'team-a',
     children: [],
     members: []
   };

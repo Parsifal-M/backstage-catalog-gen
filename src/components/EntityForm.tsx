@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   TextField,
   Select,
@@ -29,6 +29,7 @@ export const EntityForm = ({ onGenerate }: EntityFormProps) => {
   const [owner, setOwner] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [annotationsText, setAnnotationsText] = useState<string>("");
+  const [showOwnerField, setShowOwnerField] = useState<boolean>(true);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -42,6 +43,10 @@ export const EntityForm = ({ onGenerate }: EntityFormProps) => {
     const parsedAnnotations = parseAnnotations(annotationsText);
     onGenerate(entityKind, amount, owner, parsedAnnotations);
   };
+
+  useEffect(() => {
+    setShowOwnerField(!["User", "Group"].includes(entityKind));
+  }, [entityKind]);
 
   return (
     <Paper
@@ -104,7 +109,7 @@ export const EntityForm = ({ onGenerate }: EntityFormProps) => {
             helperText={error ?? "Number of entities to generate (1-50)"}
           />
 
-          <TextField
+          {showOwnerField && (<TextField
             fullWidth
             id="owner"
             label="Owner (optional)"
@@ -115,7 +120,7 @@ export const EntityForm = ({ onGenerate }: EntityFormProps) => {
               setOwner(e.target.value)
             }
             helperText="Owner of the entities"
-          />
+          />)}
 
           <TextField
             fullWidth

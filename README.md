@@ -10,11 +10,14 @@ Sometimes I want to load up the catalog with a bunch of entities and it was a bi
 
 ## What Next?
 
-I don't really know, it serves its current purpose well enough, but I am open to any suggestions or improvements. It would be nice to maybe allow for adding custom metadata in addition to annotations? Maybe later!
+I don't really know, it serves its current purpose well enough, but I am open to any suggestions or improvements.
+
+- [ ] Custom Tags on entities
+- [ ] Relationships between entities
 
 ## Contributing
 
-If you have any ideas or improvements, feel free to open an issue or submit a pull request.
+If you have any ideas or improvements, feel free to open an issue or submit a pull request. You can also read the brief [CONTRIBUTING.md](CONTRIBUTING.md) for more information.
 
 ## License
 

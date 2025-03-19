@@ -107,7 +107,7 @@ function App() {
               <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
                 You can copy and dump annotations into the text area below, or
                 enter them manually, line by line in the below format, if you
-                don't add any annotations it will not add any to the generated
+                don&apos;t add any annotations it will not add any to the generated
                 YAML.
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
@@ -142,6 +142,13 @@ function App() {
               style={{ color: "#7df3e1", textDecoration: "none" }}
             >
               Peter
+            </a>
+            {" "} and {" "}
+            <a
+              href="https://github.com/Parsifal-M/backstage-catalog-gen/graphs/contributors"
+              style={{ color: "#7df3e1", textDecoration: "none" }}
+            >
+              Contributors
             </a>
           </Typography>
         </Box>

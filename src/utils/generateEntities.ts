@@ -12,13 +12,14 @@ export const generateEntities = (
   const entities: Entity[] = [];
 
   for (let i = 0; i < amount; i++) {
-    const entityName = `example-${faker.hacker.abbreviation().toLowerCase()}-${i + 1}`;
-
     const entity = generateEntity(entityKind, {
-      name: entityName,
+      name:
+        entityKind !== "User"
+          ? `example-${faker.hacker.abbreviation().toLowerCase()}-${i + 1}`
+          : `example-${faker.person.firstName().toLowerCase()}-${faker.person.lastName().toLowerCase()}-${i + 1}`,
       owner: owner || undefined,
       annotations,
-      spec: {}  // todo: pass any custom spec options if needed
+      spec: {}, // todo: pass any custom spec options if needed
     });
 
     entities.push(entity);

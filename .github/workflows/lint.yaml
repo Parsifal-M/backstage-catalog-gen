@@ -1,0 +1,27 @@
+name: Linting
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: "yarn"
+      - name: Enable Corepack for Yarn
+        run: corepack enable
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Run ESLint
+        run: yarn lint
